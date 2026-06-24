@@ -1,7 +1,7 @@
 name: exercise2
 on: push
 jobs:
- lint, build and test:
+ lint_build_and_test:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout code
