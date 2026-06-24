@@ -1,45 +1,45 @@
 name: exerise1
 on: push
 jobs:
- name: lint
- runs-on: ubuntu-latest
- steps:
-  - name: Checkout code
-    uses: actions/checkout@v3
-  - name: Install nodejs
-    uses: actions/setup-node@v3
-    with:
+ lint:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install dependencies
+      run: npm ci
+    - name: run lint
+      run: npm run lint
+ test:
+  needs: lint
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install dependencies
+      run: npm ci
+    - name: run test
+      run: npm test
+ build:
+  needs: [lint, test]
+  runs-on: ubuntu-latest
+  steps:
+   - name: Checkout code
+     uses: actions/checkout@v3
+   - name: Install nodejs
+     uses: actions/setup-node@v3
+     with:
       node-version: '18'
-  - name: Install dependencies
-    run: npm ci
-  - name: run lint
-    run: npm run lint
- name: test
- needs: lint
- runs-on: ubuntu-latest
- steps:
-  - name: Checkout code
-    uses: actions/checkout@v3
-  - name: Install nodejs
-    uses: actions/setup-node@v3
-    with:
-      node-version: '18'
-  - name: Install dependencies
-    run: npm ci
-  - name: run test
-    run: npm test
- name: build
- needs: [lint, test]
- runs-on: ubuntu-latest
- steps:
-  - name: Checkout code
-    uses: actions/checkout@v3
-  - name: Install nodejs
-    uses: actions/setup-node@v3
-    with:
-      node-version: '18'
-  - name: Install dependencies
-    run: npm ci
-  - name: run build
-    run: npm run build
-    
+   - name: Install dependencies
+     run: npm ci
+   - name: run build
+     run: npm run build
+        
